@@ -23,9 +23,13 @@ const Videocontainer = () => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className='flex flex-wrap'>
-      {videos.map(video => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      {videos.map((video) => (
         <Link key={video.id} to={"/watch?v=" + video.id}>
           <Videocard info={video} />
         </Link>

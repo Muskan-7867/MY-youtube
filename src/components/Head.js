@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleMenu } from '../store/reducers/appSlice';
@@ -5,12 +6,10 @@ import { toggleMenu } from '../store/reducers/appSlice';
 const Head = () => {
     const dispatch = useDispatch();
     const [showSearch, setShowSearch] = useState(true);
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
             setShowSearch(window.innerWidth > 536);
-            setIsSmallScreen(window.innerWidth <= 536);
         };
 
         handleResize();
@@ -28,15 +27,7 @@ const Head = () => {
 
     const toggleSearch = () => {
         setShowSearch(!showSearch);
-        // Remove extra search button if on small screen
-        if (isSmallScreen) {
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.classList.toggle('w-2/3'); 
-            }
-        }
     };
-    
 
     return (
         <div className='grid grid-flow-col p-5 m-2 shadow-lg md:grid-cols-5 grid-cols-1 gap-4'>
@@ -55,67 +46,54 @@ const Head = () => {
                     />
                 </a>
             </div>
-            <div className='col-span-1 md:col-span-2 h-8 flex mt-3 ml-10 justify-center items-center'>
+            <div className={`col-span-1 md:col-span-2 h-8 flex mt-3 ml-10 justify-center items-center ${showSearch ? 'w-full' : 'w-auto'}`}>
                 {!showSearch && (
-                    <button className='border border-gray-500 bg-gray-100 rounded-l-full  rounded-r-full p-2' onClick={toggleSearch}>
+                    <button className='border border-gray-500 bg-gray-100 rounded-full p-2' onClick={toggleSearch}>
                         🔍
                     </button>
                 )}
                 {showSearch && (
-                    <>
+                    <div className='relative'>
                         <input 
-    id="searchInput" // Add id for selecting the input element
-    className={`w-full md:w-1/2 xl:w-4/5 border border-gray-500 rounded-l-full rounded-r-full p-2 ${isSmallScreen && 'w-1/2'}`} 
-    type='text' 
-/>
-
-                        <button className='border border-gray-500 bg-gray-100  rounded-r-full p-2' onClick={toggleSearch}>
-                        🔍
+                             id="searchInput" 
+                             className={`w-full md:w-1/2 xl:w-4/5 border border-gray-500 rounded-l-full p-2 pl-4 focus:outline-none ${showSearch ? 'rounded-r-none' : 'rounded-r-full'}`} 
+                             type='text' 
+                        />
+                        <button className={`absolute right-0 top-0 bottom-0 border border-l-0 border-gray-500 bg-gray-100 rounded-r-full  p-2 focus:outline-none ${showSearch ? 'block' : 'hidden'}`} onClick={toggleSearch}>
+                            🔍
                         </button>
-
-                        {isSmallScreen && (
-                            <button className='border border-gray-500 bg-gray-100   rounded-r-full p-2' onClick={toggleSearch}>
-                                ✖️
-                            </button>
-                        )}
-                    </>
+                        <button className={`absolute right-0 top-0 bottom-0 border border-l-0 border-gray-500 bg-gray-100  p-2  rounded-r-full focus:outline-none ${showSearch ? 'hidden' : 'block'}`} onClick={toggleSearch}>
+                            ✖️
+                        </button>
+                    </div>
                 )}
             </div>
             <div className='flex justify-end items-center col-span-2 space-x-4 md:col-span-2'>
-                {showSearch && (
-                    <button className='border border-gray-500 bg-gray-100 rounded-full p-2'>
-                        <img
-                            className='h-6'
-                            alt='microphone' 
-                            src='https://img.icons8.com/material-rounded/24/000000/microphone.png' 
-                        />
-                    </button>
-                )}
-                {!showSearch && (
-                    <>
-                        <button className='border border-gray-500 bg-gray-100 rounded-full p-2 hidden md:block'>
-                            <img
-                                className='h-6'
-                                alt='microphone' 
-                                src='https://img.icons8.com/material-rounded/24/000000/microphone.png' 
-                            />
-                        </button>
-                        <button className='border border-gray-500 bg-gray-100 rounded-full p-2 hidden md:block'>
-                            <img
-                                className='h-6'
-                                alt='create' 
-                                src='https://img.icons8.com/material-rounded/24/000000/create-new--v1.png' 
-                            />
-                        </button>
-                        <button className='border border-gray-500 bg-gray-100 rounded-full p-2 hidden md:block'>
-                            <img
-                                className='h-6'
-                                alt='notification' 
-                                src='https://img.icons8.com/material-rounded/24/000000/appointment-reminders.png' 
-                            />
-                        </button>
-                    </>
-                )}
+                {/* Microphone icon */}
+                <button className='border border-gray-500 bg-gray-100 rounded-full p-2 hidden md:block'>
+                    <img
+                        className='h-6'
+                        alt='microphone' 
+                        src='https://img.icons8.com/material-rounded/24/000000/microphone.png' 
+                    />
+                </button>
+                {/* Create icon */}
+                <button className='border border-gray-500 bg-gray-100 rounded-full p-2 hidden md:block'>
+                    <img
+                        className='h-6'
+                        alt='create' 
+                        src='https://img.icons8.com/material-rounded/24/000000/create-new--v1.png' 
+                    />
+                </button>
+                {/* Notification icon */}
+                <button className='border border-gray-500 bg-gray-100 rounded-full p-2 hidden md:block'>
+                    <img
+                        className='h-6'
+                        alt='notification' 
+                        src='https://img.icons8.com/material-rounded/24/000000/appointment-reminders.png' 
+                    />
+                </button>
+                {/* User icon */}
                 <img
                     className='h-10'
                     alt='icon' 

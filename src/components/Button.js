@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const Button = ({name}) => {
-  return (
-    <div>
-        <button>{name}</button>
-    </div>
-  )
-}
+const Button = ({ name }) => {
+  return <button className="focus:outline-none">{name}</button>;
+};
 
-export default Button
+export default Button;
