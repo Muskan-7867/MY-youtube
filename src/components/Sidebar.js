@@ -25,13 +25,16 @@ import {
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faList } from "@fortawesome/free-solid-svg-icons/faList";
 
+
 const Sidebar = () => {
   const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
 
   if (!isMenuOpen) return null; // called early return pattern
 
   return (
-    <div className="p-5 shadow-lg w-64">
+    <div class='sticky top-0 h-screen overflow-y-auto bg-white p-4 w-full hidden md:block'>
+
+
       <ul>
         <li className="flex items-center my-2">
           <FontAwesomeIcon icon={faHome} />
@@ -153,6 +156,10 @@ const Sidebar = () => {
       <span>
         Terms Privacy Policy & Safety How YouTube works Test new features
       </span>
+      <br></br>
+      <br></br>
+
+      <span className="text-gray-400 text-sm ">© 2024 Google LLC</span>
     </div>
   );
 };
